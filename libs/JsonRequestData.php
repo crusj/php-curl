@@ -18,6 +18,6 @@
         public function createData() {
             ksort($this->a_data);
 
-            return json_encode((Array)$this->a_data);
+            return json_encode((Array)$this->a_data,JSON_UNESCAPED_UNICODE);
         }
     }
