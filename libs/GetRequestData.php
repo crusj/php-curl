@@ -27,7 +27,7 @@
                 //2.生成GET请求参数
                 $s_data = '';
                 foreach ($a_data as $s_key => $m_value):
-                    $s_data = $s_key.'='.$m_value.'&';
+                    $s_data .= $s_key.'='.$m_value.'&';
                 endforeach;
                 return  rtrim($s_data,'&');
 
