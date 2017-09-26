@@ -1,0 +1,19 @@
+{
+    "name": "lance/curl",
+    "description": "curl 操作库",
+    "license": "lance",
+    "authors": [
+        {
+            "name": "lance",
+            "email": "296769589@qq.com"
+        }
+    ],
+    "require": {
+			"php":">=5.4.0"
+	},
+	"minimum-stability":"dev",
+	"extra":{
+			}
+	},
+
+}
