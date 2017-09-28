@@ -18,11 +18,12 @@
          */
         public function sendRequest() {
             //1.设置请求地址
-	    $s_param =  $this->o_requestData->createData();
-	    if(!empty($s_param)):
-		    $this->s_requestUrl .= $s_parm;
+            $s_param = $this->o_requestData->createData();
+            if (!empty($s_param)):
+                $this->s_requestUrl .= $s_param;
             endif;
-            curl_setopt($this->r_curl,CURLOPT_URL,$this->s_requestUrl);
+            curl_setopt($this->r_curl, CURLOPT_URL, $this->s_requestUrl);
+
             return curl_exec($this->r_curl);
         }
     }
