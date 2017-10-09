@@ -8,9 +8,11 @@
 
     namespace curl\libs;
 
+    use File\libs\action\FileCreate;
 
     abstract class Curl
     {
+        protected $s_errorMsg;//错误信息
         protected $s_requestUrl;//请求地址
         protected $o_requestData;//请对数据对象
         protected $r_curl;//请求资源
@@ -92,5 +94,58 @@
         public function __destruct() {
             //1.释放curl资源
             curl_close($this->r_curl);
+        }
+
+        /**
+         * 返回错误信息
+         * @return mixed
+         */
+        public function getErrorMsg() {
+            return $this->s_errorMsg;
+        }
+
+        /**
+         * 分离响应信息信息
+         *
+         * @param $s_response
+         *
+         * @return array
+         */
+        public function sepHeaderBody($s_response) {
+            $i_headerLen = curl_getinfo($this->r_curl, CURLINFO_HEADER_SIZE);
+            //响应头
+            $s_header = substr($s_response, 0, $i_headerLen);
+            //判断是否是附件
+            if (strstr($s_header, 'attachment') !== FALSE):
+                //获取附件名
+                preg_match('/filename="(.*?)"/', $s_header, $a_match);
+                $m_attachmentName = $a_match[1];
+            else:
+                $m_attachmentName = FALSE;
+            endif;
+            //响应体
+            $s_body = substr($s_response, $i_headerLen);
+
+            return [
+                'body'       => $s_body,
+                'attachment' => $m_attachmentName,
+            ];
+        }
+
+        /**
+         * 保存临时文件，成功返回文件名，失败返回false
+         * @param $s_fileName
+         * @param $s_body
+         *
+         * @return bool|string
+         */
+        public function saveTmpFile($s_fileName, $s_body) {
+            $o_createFile = new FileCreate($s_fileName);
+            if ($o_createFile->operate($s_body, FALSE) === FALSE):
+                $this->s_errorMsg = $o_createFile->getLastError();
+                return false;
+            endif;
+            return $o_createFile->getFullName();
+
         }
     }

@@ -27,10 +27,36 @@
                 'Content-Type: application/json',
                 'Content-Length: ' . strlen($s_data),
             ]);
+            curl_setopt($this->r_curl, CURLOPT_HEADER, TRUE);
+            curl_setopt($this->r_curl, CURLOPT_NOBODY, FALSE);
+            curl_setopt($this->r_curl, CURLOPT_RETURNTRANSFER, TRUE);
+
             //4.设置请求数据
             curl_setopt($this->r_curl, CURLOPT_POSTFIELDS, $s_data);
+            $rsl = curl_exec($this->r_curl);
+            try {
+                //状态值不为200
+                $s_httpCode = curl_getinfo($this->r_curl, CURLINFO_HTTP_CODE);
+                if ($s_httpCode != '200'):
+                    throw new \Exception(curl_error($this->r_curl));
+                endif;
+                $a_res = $this->sepHeaderBody($rsl);
+                //如果为附件
+                if ($a_res['attachment'] !== FALSE):
+                    $s_path = dirname(__DIR__);
+                    $s_fileName = $s_path . '/tmp/' . $a_res['attachment'];
+                    if (($s_filePath = $this->saveTmpFile($s_fileName, $a_res['body'])) === FALSE):
+                        throw new \Exception($this->getErrorMsg());
+                    else:
+                        return  $s_filePath;
+                    endif;
+                else:
+                    return $a_res['body'];
+                endif;
+            } catch (\Exception $e) {
+                $this->s_errorMsg = $e->getMessage();
 
-
-            return curl_exec($this->r_curl);
+                return FALSE;
+            }
         }
     }

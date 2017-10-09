@@ -1,0 +1,51 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "613c0c1061844e60d80a6a0f45183f9a",
+    "packages": [
+        {
+            "name": "lance/file",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jianglong1992/file.git",
+                "reference": "139a4f55f321506e8ad18b27dd5bab00ac0758a4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/jianglong1992/file/139a4f55f321506e8ad18b27dd5bab00ac0758a4.zip",
+                "reference": "139a4f55f321506e8ad18b27dd5bab00ac0758a4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "lance"
+            ],
+            "authors": [
+                {
+                    "name": "lance",
+                    "email": "296769589@qq.com"
+                }
+            ],
+            "description": "文件操作类",
+            "time": "2017-09-29T08:10:26+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=5.4.0"
+    },
+    "platform-dev": []
+}

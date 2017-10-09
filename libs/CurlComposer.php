@@ -54,7 +54,10 @@
                 if (isset($o_curl)):
                     //SSL设置,根据用户是否传入SSL证书以及私钥文件
                     $o_curl->setSSL(!empty($this->a_SSL), $this->a_SSL);
-                    return $o_curl->sendRequest();
+                    if (($m_rsl = $o_curl->sendRequest()) === FALSE):
+                        throw new \Exception($o_curl->getErrorMsg());
+                    endif;
+                    return $m_rsl;
                 else:
                     return NULL;
                 endif;

@@ -8,9 +8,21 @@
             "email": "296769589@qq.com"
         }
     ],
+    "repositories":{
+	    "packagist":{
+		    "type":"composer",
+		    "url":"https://packagist.phpcomposer.com"
+	    }
+    },
     "require": {
-			"php":">=5.4.0"
+		"php":">=5.4.0",
+        "lance/file": "v1.0.0"
 	},
+    "autoload":{
+      "psr-4":{
+        "File\\libs\\":"vendor/lance/file/libs"
+      }
+    },
 	"minimum-stability":"dev"
 
 }
