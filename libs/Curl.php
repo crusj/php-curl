@@ -43,7 +43,32 @@
          * 发送curl请求
          * @return mixed
          */
-        abstract function sendRequest();
+        protected function sendRequest(){
+            $s_rsl = curl_exec($this->r_curl);
+            try{
+                //判断状态
+                if (curl_getinfo($this->r_curl, CURLINFO_HTTP_CODE) == '200'):
+                    $a_res = $this->sepHeaderBody($s_rsl);
+                    //附件
+                    if ($a_res['attachment'] !== FALSE):
+                        $s_path = dirname(__DIR__);
+                        $s_fileName = $s_path . '/tmp/' . $a_res['attachment'];
+                        if (($s_filePath = $this->saveTmpFile((string)$s_fileName, $a_res['body'])) === FALSE):
+                            throw new \Exception($this->getErrorMsg());
+                        else:
+                            return  $s_filePath;
+                        endif;
+                    else:
+                        return $a_res['body'];
+                    endif;
+                else:
+                    throw new \Exception(curl_error($this->r_curl));
+                endif;
+            }catch (\Exception $e){
+                $this->s_errorMsg = $e->getMessage();
+                return false;
+            }
+        }
 
         /**
          * 构造方法首先执行的方法
@@ -68,7 +93,23 @@
             endif;
         }
 
-
+        /**
+         * 设置CURL opts
+         * @param array $extraOpts 额外的opt
+         */
+        public function setOpts(array $extraOpts = []) {
+            $a_opt = [
+                CURLOPT_URL=> $this->s_requestUrl,
+                CURLOPT_HEADER=> TRUE,//头文件作为输出流
+                CURLOPT_NOBODY=> FALSE,//是否显示html body
+                CURLOPT_AUTOREFERER=> TRUE,//重定向的时候带上referrer
+                CURLOPT_FOLLOWLOCATION=> TRUE,//允许重定向
+                CURLOPT_RETURNTRANSFER=> TRUE,
+            ];
+            //合并Options
+            $a_opt = array_merge($a_opt,$extraOpts);
+            curl_setopt_array($this->r_curl,$a_opt);
+        }
         /**
          * 设置证书、私钥的类型已经文件路径
          *
@@ -118,8 +159,8 @@
             //判断是否是附件
             if (strstr($s_header, 'attachment') !== FALSE):
                 //获取附件名
-                preg_match('/filename="(.*?)"/', $s_header, $a_match);
-                $m_attachmentName = $a_match[1];
+                preg_match('/filename=(.*?)\r\n/', $s_header, $a_match);
+                $m_attachmentName = trim($a_match[1], '\"');
             else:
                 $m_attachmentName = FALSE;
             endif;
@@ -134,6 +175,7 @@
 
         /**
          * 保存临时文件，成功返回文件名，失败返回false
+         *
          * @param $s_fileName
          * @param $s_body
          *
@@ -143,8 +185,10 @@
             $o_createFile = new FileCreate($s_fileName);
             if ($o_createFile->operate($s_body, FALSE) === FALSE):
                 $this->s_errorMsg = $o_createFile->getLastError();
-                return false;
+
+                return FALSE;
             endif;
+
             return $o_createFile->getFullName();
 
         }

@@ -24,13 +24,27 @@
 
             $s_xml = "<xml>";
             foreach ($this->a_data as $key => $val) {
-                if (is_numeric($val)) {
-                    $s_xml .= "<" . $key . ">" . $val . "</" . $key . ">";
-                } else {
-                    $s_xml .= "<" . $key . "><![CDATA[" . $val . "]]></" . $key . ">";
-                }
+                //支持二级嵌套
+                if (is_array($val)):
+                    $s_xml .= "<".$key.">";
+                    foreach ($val as $k => $v):
+                        if (is_numeric($v)) {
+                            $s_xml .= "<" . $k . ">" . $v . "</" . $k . ">";
+                        } else {
+                            $s_xml .= "<" . $k . "><![CDATA[" . $v . "]]></" . $k . ">";
+                        }
+                    endforeach;
+                    $s_xml .= "</".$key.">";
+                else:
+                    if (is_numeric($val)) {
+                        $s_xml .= "<" . $key . ">" . $val . "</" . $key . ">";
+                    } else {
+                        $s_xml .= "<" . $key . "><![CDATA[" . $val . "]]></" . $key . ">";
+                    }
+                endif;
             }
             $s_xml .= "</xml>";
+
             return $s_xml;
         }
     }
