@@ -98,7 +98,7 @@
          * @param array $extraOpts 额外的opt
          */
         public function setOpts(array $extraOpts = []) {
-            $a_opt = [
+            $a_opts = [
                 CURLOPT_URL=> $this->s_requestUrl,
                 CURLOPT_HEADER=> TRUE,//头文件作为输出流
                 CURLOPT_NOBODY=> FALSE,//是否显示html body
@@ -107,8 +107,8 @@
                 CURLOPT_RETURNTRANSFER=> TRUE,
             ];
             //合并Options
-            $a_opt = array_merge($a_opt,$extraOpts);
-            curl_setopt_array($this->r_curl,$a_opt);
+            $a_opts += $extraOpts;
+            curl_setopt_array($this->r_curl,$a_opts);
         }
         /**
          * 设置证书、私钥的类型已经文件路径

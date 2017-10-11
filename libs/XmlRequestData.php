@@ -17,7 +17,6 @@
     {
         public function createData() {
             ksort($this->a_data);
-            var_dump($this->a_data);
             if (!is_array($this->a_data) || count($this->a_data) <= 0) {
                 return '';
             }
