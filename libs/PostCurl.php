@@ -14,8 +14,8 @@
         public function sendRequest() {
             //额外options
             $a_extraOpts = [
-                CURLOPT_POST, TRUE,
-                CURLOPT_POSTFIELDS, $this->o_requestData->createData(),
+                CURLOPT_POST => TRUE,
+                CURLOPT_POSTFIELDS => $this->o_requestData->createData(),
             ];
             $this->setOpts($a_extraOpts);
             return parent::sendRequest();
