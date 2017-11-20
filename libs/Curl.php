@@ -167,7 +167,7 @@
             //其他文件
             if(strstr($s_header,'Content-Type: image/jpg') !== FALSE):
                 preg_match("/Content-Type: .*?\/(.*)\r\n/", $s_header, $a_match);
-                $m_attachmentName = 'download.'.trim($a_match[1], '\"');
+                 $m_attachmentName = uniqid().'.'.trim($a_match[1], '\"');
             endif;
             //响应体
             $s_body = substr($s_response, $i_headerLen);
