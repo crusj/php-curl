@@ -20,7 +20,7 @@
 	},
     "autoload":{
       "psr-4":{
-        "File\\libs\\":"vendor/lance/file/libs"
+        "curl\\libs\\":"libs/"
       }
     },
 	"minimum-stability":"dev"
