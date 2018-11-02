@@ -27,6 +27,7 @@
                 ],
                 CURLOPT_POSTFIELDS => $s_data,//字段
             ];
+            $this->setOpts($a_extraOpts);
             return parent::sendRequest();
         }
     }

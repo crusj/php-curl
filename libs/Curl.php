@@ -8,8 +8,6 @@
 
     namespace curl\libs;
 
-    use File\libs\action\FileCreate;
-
     abstract class Curl
     {
         protected $s_errorMsg;//错误信息
