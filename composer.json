@@ -1,7 +1,7 @@
 {
     "name": "lance/php_curl",
-    "description": "curl 操作库",
-    "license": "lance",
+    "description": "conveniently curl",
+    "license": "MIT",
     "authors": [
         {
             "name": "lance",
