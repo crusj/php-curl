@@ -1,10 +1,10 @@
 {
-    "name": "lance/php_curl",
+    "name": "crusj/php_curl",
     "description": "conveniently curl",
     "license": "MIT",
     "authors": [
         {
-            "name": "lance",
+            "name": "crusj",
             "email": "296769589@qq.com"
         }
     ],
