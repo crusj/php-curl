@@ -1,6 +1,6 @@
 {
-    "name": "crusj/php_curl",
-    "description": "conveniently curl",
+    "name": "crusj/php-curl",
+    "description": "handy curl",
     "license": "MIT",
     "authors": [
         {
