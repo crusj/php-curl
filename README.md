@@ -1,8 +1,8 @@
-## php curl
+# php curl
 
 send http request,request method includes get post,request content-type includes application/json,application/xml
 
-###  file structure
+##  file structure
 
 ├── composer.json<br/>
 ├── composer.lock<br/>
@@ -25,9 +25,9 @@ send http request,request method includes get post,request content-type includes
 │   └── test.php<br/>
 └── UML.png<br/>
 
-### examples
+## examples
 
-#### send GET request
+### send GET request
 
 ```php
 $requestUri = "http://127.0.0.1/test/get.php";
@@ -47,7 +47,7 @@ if(result === false){
     ...
 }
 ```
-#### send POST request
+### send POST request
 
 the only different is $requestMethod to "POST"
 
@@ -70,7 +70,7 @@ if(result === false){
 }
 ```
 
-#### send JSON request
+### send JSON request
 
 the only different is $requestMethod to "JSON"
 
@@ -92,7 +92,7 @@ if(result === false){
     ...
 }
 ```
-#### send XML request
+### send XML request
 
 the only different is $requestMethod to "XML"
 
@@ -114,6 +114,18 @@ if(result === false){
     ...
 }
 ```
+
+## log
+
+### v1.0.0
+* 基本的get,post,json,xml请求发送、支持SSL
+* 请求发送成功返回body，如果是response头为attachment则会返回附件的临时本地地址，
+* 请求失败返回false,通过`getErrorMsg`方法获取错误信息
+* 问题：只把响应头为200的请求判定为成功，基于restful风格的则会出现问题
+
+### v1.1.0
+* 发送请求时支持设置请求头，newCurlComposer($uri,$method,$param,$ssl,array $header),请求头的格式为键值对,或者冒号分割的形式
+* 返回数据现在会返回一个包含code与body的数组,不限于响应头为200
 
 
 
